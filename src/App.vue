@@ -1,6 +1,8 @@
 <template>
 
-  <MakeModal @openModal="openModal = false" :data="data" :index="index" :openModal="openModal"/>
+  <div class="start" :class="{ end : closeModal }">
+  <MakeModal @closeModal="openModal = false" :data="data" :index="index" :openModal="openModal"/>
+  </div>
 
   <div class = "nav-bar">
     <a v-for = "(m, i) in menus " :key="i">{{ m }}</a>
@@ -76,6 +78,15 @@ div{
 
 .room-img{
   width: 60%;
+}
+
+.start {
+  opacity: 0;
+  transition: all 1s;
+
+}
+.end {
+  opacity: 1;
 }
 
 </style>
