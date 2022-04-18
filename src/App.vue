@@ -1,13 +1,16 @@
 <template>
 
-  <div class="start" :class="{ end : closeModal }">
   <MakeModal @closeModal="openModal = false" :data="data" :index="index" :openModal="openModal"/>
-  </div>
 
   <div class = "nav-bar">
     <a v-for = "(m, i) in menus " :key="i">{{ m }}</a>
   </div>
-
+  <div>
+    <button @click="sortPriceAsc">낮은 가격순</button>
+    <button @click="sortPriceDesc">높은 가격순</button>
+    <button @click="sortName">이름순</button>
+    <button @click="rollBack">되돌리기</button>
+  </div>
   <MakeList @openModal="openModal = true" :data="data[i]" v-for="(a,i) in data" :key="a"/>
 
 </template>
@@ -27,12 +30,34 @@ export default {
       openModal : false,
       data : data,
       index : 0,
+      dataOrigin : [...data],
     }
   },
 
   components: {
     MakeModal,
     MakeList,
+  },
+
+  methods: {
+    sortPriceAsc(){
+      this.data.sort(function(a,b){
+        return a.price - b.price;
+      })
+    },
+    sortPriceDesc(){
+      this.data.sort(function(a,b){
+        return b.price - a.price;
+      })
+    },
+    rollBack(){
+      this.data = [...this.dataOrigin];
+    },
+    sortName(){
+      this.data.sort(function(a,b){
+        return a.title.localeCompare(b.title);
+      })
+    }
   }
 }
 </script>
